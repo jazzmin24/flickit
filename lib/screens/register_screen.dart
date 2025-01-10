@@ -26,12 +26,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       MaterialPageRoute(builder: (context) => HomeScreen()),
     );
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Registration Successful!")),
+        const SnackBar(content: Text("Registration Successful!")),
       );
      
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Registration Failed!")),
+        const SnackBar(content: Text("Registration Failed!")),
       );
     }
   }
@@ -40,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.black87, Colors.blueAccent],
                 begin: Alignment.topCenter,
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Create an Account",
                         style: TextStyle(
                           fontSize: 24,
@@ -62,14 +62,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       TextField(
                         controller: _usernameController,
                         decoration: InputDecoration(
                           hintText: "Username",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Color.fromARGB(255, 222, 221, 221)),
-                          labelStyle: TextStyle(color: Colors.white),
+                          labelStyle: const TextStyle(color: Colors.white),
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           filled: true,
                           fillColor: Colors.black26,
@@ -78,25 +78,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.blueAccent),
+                            borderSide: const BorderSide(color: Colors.blueAccent),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.lightBlue),
+                            borderSide: const BorderSide(color: Colors.lightBlue),
                           ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Password",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Color.fromARGB(255, 222, 221, 221)),
-                          labelStyle: TextStyle(color: Colors.white),
+                          labelStyle: const TextStyle(color: Colors.white),
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           filled: true,
                           fillColor: Colors.black26,
@@ -105,17 +105,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.blueAccent),
+                            borderSide: const BorderSide(color: Colors.blueAccent),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(color: Colors.lightBlue),
+                            borderSide: const BorderSide(color: Colors.lightBlue),
                           ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
                           _register();
@@ -125,23 +125,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Register",
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       RichText(
                         text: TextSpan(
                           text: "Already have an account? ",
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           children: [
                             TextSpan(
                                 text: "Login here",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.lightBlueAccent,
                                   decoration: TextDecoration.underline,
                                 ),
