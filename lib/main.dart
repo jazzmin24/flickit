@@ -1,4 +1,5 @@
 import 'package:flickit/provider/auth_provider.dart';
+import 'package:flickit/provider/drill_provider.dart';
 import 'package:flickit/screens/home_screen.dart';
 import 'package:flickit/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => AuthProvider(),
           ),
+           ChangeNotifierProvider(create: (_) => DrillProvider()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

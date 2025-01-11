@@ -2,17 +2,20 @@ import 'package:flickit/screens/drill_detail_page.dart';
 import 'package:flickit/screens/user_dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flickit/provider/drill_provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> drills = [
-    {"name": "Toe Taps", "totalCount": 40, "image": "assets/toe_taps.png"},
-    {"name": "Dribble", "totalCount": 30, "image": "assets/dribble.png"},
-    {"name": "Passing", "totalCount": 50, "image": "assets/passing.png"},
-    {"name": "Shooting", "totalCount": 25, "image": "assets/shooting.png"},
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final drillProvider = Provider.of<DrillProvider>(context, listen: false);
+
+    // Fetch drills when the screen is loaded
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      drillProvider.fetchDrills(
+          "67815edfe6306adda05d0515"); // Replace with actual userId
+    });
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -41,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         CupertinoIcons.profile_circled,
                         color: Colors.lightBlueAccent,
                         size: 40,
@@ -59,93 +62,117 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 20),
-                // GridView for drills
+
+                // Drill Grid
                 Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // 2 items per row
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      childAspectRatio:
-                          0.8, // Adjust height to allow space for content
-                    ),
-                    itemCount: drills.length,
-                    itemBuilder: (context, index) {
-                      final drill = drills[index];
-                      return GestureDetector(
-                        onTap: () {
-                          // Navigate to Drill Detail Page
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DrillDetailPage(drill: drill),
+                  child: Consumer<DrillProvider>(
+                    builder: (context, drillProvider, child) {
+                      if (drillProvider.isLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (drillProvider.drills.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            "No drills available",
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        );
+                      }
+
+                      return GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // 2 items per row
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: 0.8, // Adjust height for content
+                        ),
+                        itemCount: drillProvider.drills.length,
+                        itemBuilder: (context, index) {
+                          final drill = drillProvider.drills[index];
+                          return GestureDetector(
+                            onTap: () {
+                              // Navigate to Drill Detail Page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DrillDetailPage(drill: drill),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // Drill Image
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15),
+                                    ),
+                                    child: Image.network(
+                                      drill['picture'],
+                                      height: 160,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return const Icon(
+                                          Icons.image_not_supported,
+                                          size: 100,
+                                          color: Colors.white54,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  const Spacer(), // Push content to the bottom
+                                  // Drill Name
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Text(
+                                      drill['drillName'],
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  // Total Count
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Text(
+                                      "Count: ${drill['totalCount']}",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white70,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height: 5), // Add some bottom padding
+                                ],
+                              ),
                             ),
                           );
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                blurRadius: 10,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              // Drill Image
-                              ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15),
-                                ),
-                                child: Image.asset(
-                                  drill['image'],
-                                  height: 100,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              const Spacer(), // Push content to the bottom
-                              // Drill Name
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  drill['name'],
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              // Total Count
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  "Count: ${drill['totalCount']}",
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white70,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              const SizedBox(
-                                  height: 10), // Add some bottom padding
-                            ],
-                          ),
-                        ),
                       );
                     },
                   ),
