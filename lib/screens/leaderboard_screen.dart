@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LeaderboardScreen extends StatelessWidget {
   final List<Map<String, dynamic>> leaderboard = [
@@ -13,11 +14,11 @@ class LeaderboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Leaderboard",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -45,10 +46,10 @@ class LeaderboardScreen extends StatelessWidget {
               return Card(
                 color: Colors.black54,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(15.r),
                 ),
                 elevation: 5,
-                margin: const EdgeInsets.only(bottom: 16),
+                margin: EdgeInsets.only(bottom: 16.h),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.blueAccent,
@@ -62,16 +63,16 @@ class LeaderboardScreen extends StatelessWidget {
                   ),
                   title: Text(
                     user['username'],
-                    style: const TextStyle(
-                      fontSize: 18,
+                    style: TextStyle(
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                   trailing: Text(
                     "Total: ${user['totalCount']}",
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                       color: Colors.white70,
                     ),
                   ),

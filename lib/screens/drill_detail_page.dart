@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrillDetailPage extends StatelessWidget {
   final Map<String, dynamic> drill;
@@ -30,8 +31,7 @@ class DrillDetailPage extends StatelessWidget {
             children: [
               // 🔹 Custom AppBar
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                 child: Row(
                   children: [
                     IconButton(
@@ -40,13 +40,13 @@ class DrillDetailPage extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     Expanded(
                       child: Text(
                         drillName,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 24.sp,
                           fontWeight: FontWeight.bold,
                         ),
                         overflow: TextOverflow.ellipsis,
@@ -60,9 +60,9 @@ class DrillDetailPage extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(30.r),
                     child: imageUrl.isNotEmpty
                         ? Image.network(
                             imageUrl,
@@ -94,8 +94,8 @@ class DrillDetailPage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16.sp,
                     color: Colors.white70,
                   ),
                   textAlign: TextAlign.center,
@@ -107,11 +107,11 @@ class DrillDetailPage extends StatelessWidget {
                 flex: 3,
                 child: Container(
                   padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.black54,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30.r),
+                      topRight: Radius.circular(30.r),
                     ),
                   ),
                   child: Column(
@@ -119,13 +119,13 @@ class DrillDetailPage extends StatelessWidget {
                     children: [
                       Text(
                         drillName,
-                        style: const TextStyle(
-                          fontSize: 22,
+                        style: TextStyle(
+                          fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       Text(
                         "Total Count: $totalCount",
                         style: const TextStyle(
@@ -133,7 +133,7 @@ class DrillDetailPage extends StatelessWidget {
                           color: Colors.white70,
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
 
                       // 🔹 Input Field
                       TextField(
@@ -146,21 +146,21 @@ class DrillDetailPage extends StatelessWidget {
                           filled: true,
                           fillColor: Colors.black26,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(15.r),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(15.r),
                             borderSide:
                                 const BorderSide(color: Colors.blueAccent),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(15.r),
                             borderSide:
                                 const BorderSide(color: Colors.lightBlue),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
 
                       // 🔹 Submit Button
                       Center(
@@ -201,14 +201,15 @@ class DrillDetailPage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 50,
-                              vertical: 15,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 50.w,
+                              vertical: 15.h,
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             "Submit",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            style:
+                                TextStyle(fontSize: 18.sp, color: Colors.white),
                           ),
                         ),
                       ),

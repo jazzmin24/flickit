@@ -3,6 +3,7 @@ import 'package:flickit/screens/home_screen.dart';
 import 'package:flickit/screens/register_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -54,15 +55,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
+                       Text(
                         "Welcome Back!",
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 24.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
-                      const SizedBox(height: 30),
+                       SizedBox(height: 30.h),
                       TextField(
                         controller: _usernameController,
                         decoration: InputDecoration(
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: const TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                       ),
-                      const SizedBox(height: 20),
+                       SizedBox(height: 20.h),
                       TextField(
                         controller: _passwordController,
                         obscureText: true,
@@ -103,15 +104,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           filled: true,
                           fillColor: Colors.black26,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.r),
                             borderSide:
                                 const BorderSide(color: Colors.blueAccent),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.r),
                             borderSide:
                                 const BorderSide(color: Colors.lightBlue),
                           ),
@@ -119,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: const TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
                       ),
-                      const SizedBox(height: 30),
+                       SizedBox(height: 30.h),
                       ElevatedButton(
                         onPressed: () {
                           _login();
@@ -127,17 +128,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueAccent,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                         ),
-                        child: const Text(
+                        child:  Text(
                           "Login",
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 18.sp, color: Colors.white),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                       SizedBox(height: 20.h),
                       RichText(
                         text: TextSpan(
                           text: "New user? ",

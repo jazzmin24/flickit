@@ -2,6 +2,7 @@ import 'package:flickit/screens/drill_detail_page.dart';
 import 'package:flickit/screens/user_dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flickit/provider/drill_provider.dart';
 
@@ -35,19 +36,19 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       "Football Drills",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 28,
+                        fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         CupertinoIcons.profile_circled,
                         color: Colors.lightBlueAccent,
-                        size: 40,
+                        size: 40.sp,
                       ),
                       onPressed: () {
                         // Navigate to DashboardScreen
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
 
                 // Drill Grid
                 Expanded(
@@ -104,11 +105,11 @@ class HomeScreen extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(15.r),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.3),
-                                    blurRadius: 10,
+                                    blurRadius: 10.r,
                                     offset: const Offset(0, 5),
                                   ),
                                 ],
@@ -118,13 +119,13 @@ class HomeScreen extends StatelessWidget {
                                 children: [
                                   // Drill Image
                                   ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15.r),
+                                      topRight: Radius.circular(15.r),
                                     ),
                                     child: Image.network(
                                       drill['picture'],
-                                      height: 160,
+                                      height: 170.h,
                                       width: double.infinity,
                                       fit: BoxFit.cover,
                                       errorBuilder:
@@ -137,37 +138,35 @@ class HomeScreen extends StatelessWidget {
                                       },
                                     ),
                                   ),
-                                  const Spacer(), // Push content to the bottom
-                                  // Drill Name
+                                  const Spacer(),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.0.w),
                                     child: Text(
                                       drill['drillName'],
-                                      style: const TextStyle(
-                                        fontSize: 14,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
-                                  const SizedBox(height: 5),
+                                  SizedBox(height: 5.h),
                                   // Total Count
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.0.w),
                                     child: Text(
                                       "Count: ${drill['totalCount']}",
-                                      style: const TextStyle(
-                                        fontSize: 14,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
                                         color: Colors.white70,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
-                                  const SizedBox(
-                                      height: 5), // Add some bottom padding
+                                  SizedBox(height: 5.h),
                                 ],
                               ),
                             ),

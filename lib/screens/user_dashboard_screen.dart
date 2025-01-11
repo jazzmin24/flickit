@@ -2,6 +2,7 @@ import 'package:flickit/screens/leaderboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DashboardScreen extends StatelessWidget {
   final List<Map<String, dynamic>> userDrills = [
@@ -15,11 +16,11 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title:  Text(
           "Dashboard",
-          style: const TextStyle(
+          style:  TextStyle(
             color: Colors.white,
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -50,32 +51,32 @@ class DashboardScreen extends StatelessWidget {
                     return Card(
                       color: Colors.black54,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(15.r),
                       ),
                       elevation: 5,
-                      margin: const EdgeInsets.only(bottom: 16),
+                      margin:  EdgeInsets.only(bottom: 16.h),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding:  EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               drill['name'],
-                              style: const TextStyle(
-                                fontSize: 18,
+                              style:  TextStyle(
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                             SizedBox(height: 8.h),
                             Text(
                               "Completed: ${drill['completed']} / ${drill['totalCount']}",
-                              style: const TextStyle(
-                                fontSize: 16,
+                              style:  TextStyle(
+                                fontSize: 16.sp,
                                 color: Colors.white70,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                             SizedBox(height: 8.h),
                             LinearProgressIndicator(
                               value: drill['completed'] / drill['totalCount'],
                               backgroundColor: Colors.white10,
@@ -93,11 +94,11 @@ class DashboardScreen extends StatelessWidget {
             //  Spacer(),
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 color: Colors.black54,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(30.r),
+                  topRight: Radius.circular(30.r),
                 ),
               ),
               child: Center(
@@ -115,11 +116,11 @@ class DashboardScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(15.r),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16, // Reduced horizontal padding
-                        vertical: 12,
+                      padding:  EdgeInsets.symmetric(
+                        horizontal: 16.w, // Reduced horizontal padding
+                        vertical: 12.h,
                       ),
                     ),
                     child: Row(
@@ -131,10 +132,10 @@ class DashboardScreen extends StatelessWidget {
                           color: Colors.lightBlueAccent,
                           size: 24,
                         ),
-                        const SizedBox(width: 8),
-                        const Text(
+                         SizedBox(width: 8.w),
+                         Text(
                           "Leaderboard",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                          style: TextStyle(fontSize: 16.sp, color: Colors.white),
                         ),
                       ],
                     ),
