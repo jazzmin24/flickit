@@ -1,5 +1,6 @@
 import 'package:flickit/provider/auth_provider.dart';
 import 'package:flickit/provider/drill_provider.dart';
+import 'package:flickit/provider/user_drill_info_provider.dart';
 import 'package:flickit/screens/home_screen.dart';
 import 'package:flickit/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,9 @@ void main() async {
   runApp(MyApp(authProvider: authProvider));
 }
 
-
 class MyApp extends StatelessWidget {
-   final AuthProvider authProvider;
-  const MyApp({super.key , required this.authProvider});
+  final AuthProvider authProvider;
+  const MyApp({super.key, required this.authProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,10 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider<AuthProvider>(
-            create: (_) => AuthProvider(),
-          ),
-           ChangeNotifierProvider(create: (_) => DrillProvider()),
+          ChangeNotifierProvider(
+              create: (_) => AuthProvider()..loadLoginState()),
+          ChangeNotifierProvider(create: (_) => DrillProvider()),
+          ChangeNotifierProvider(create: (context) => UserDrillInfoProvider()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

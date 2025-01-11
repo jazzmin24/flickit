@@ -16,7 +16,7 @@ class DrillProvider extends ChangeNotifier {
   Future<void> fetchDrills(String userId) async {
     _isLoading = true;
     notifyListeners();
-
+    log("Incoming---- ${userId}");
     try {
       final response = await http.post(
         Uri.parse(_baseUrl),

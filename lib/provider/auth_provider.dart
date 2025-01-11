@@ -69,18 +69,27 @@ class AuthProvider extends ChangeNotifier {
 
       final Map<String, dynamic> responseData = jsonDecode(response.body);
 
-      if (response.statusCode == 200 &&
-          responseData.containsKey("userId")) {
-        log("Login successful: ${response.body}");
-        await _saveLoginState(true, responseData["userId"]);
+      if (response.statusCode == 200 && responseData.containsKey("userId")) {
+        log("✅ Login successful: ${response.body}");
+
+        // Update `_userId` first
+        _userId = responseData["userId"];
+
+        // Save login state
+        await _saveLoginState(true, _userId);
+
+        // Notify UI about state change
+        notifyListeners();
+
+        log("🔹 Saved userId: $_userId"); // Ensure userId is logged properly
         return true;
       } else {
-        log("Login failed: ${response.body}");
+        log("❌ Login failed: ${response.body}");
         await _saveLoginState(false, null);
         return false;
       }
     } catch (error) {
-      log("Error during login: $error");
+      log("❌ Error during login: $error");
       await _saveLoginState(false, null);
       return false;
     }

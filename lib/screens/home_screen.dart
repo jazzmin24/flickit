@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flickit/provider/auth_provider.dart';
 import 'package:flickit/screens/drill_detail_page.dart';
 import 'package:flickit/screens/user_dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,16 +9,35 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flickit/provider/drill_provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void initialise() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final drillProvider = Provider.of<DrillProvider>(context, listen: false);
+    log("-----------------------");
+    log(authProvider.userId ?? "");
+    log("-----------------------");
+    drillProvider.fetchDrills(authProvider.userId ?? "");
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialise();
+  }
+
   @override
   Widget build(BuildContext context) {
     final drillProvider = Provider.of<DrillProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-    // Fetch drills when the screen is loaded
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      drillProvider.fetchDrills(
-          "67815edfe6306adda05d0515"); // Replace with actual userId
-    });
+    // Fetch drills when the screen is loade
 
     return Scaffold(
       body: Container(
@@ -93,14 +115,15 @@ class HomeScreen extends StatelessWidget {
                           final drill = drillProvider.drills[index];
                           return GestureDetector(
                             onTap: () {
+                              log('${authProvider.userId}');
                               // Navigate to Drill Detail Page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      DrillDetailPage(drill: drill),
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         DrillDetailPage(drill: drill),
+                              //   ),
+                              // );
                             },
                             child: Container(
                               decoration: BoxDecoration(
