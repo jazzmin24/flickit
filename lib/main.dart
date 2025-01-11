@@ -9,14 +9,18 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AuthProvider authProvider = AuthProvider();
-  await authProvider.loadLoginState();
-  runApp(MyApp(authProvider: authProvider));
+
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => AuthProvider()..loadLoginState()),
+      ChangeNotifierProvider(create: (_) => DrillProvider()),
+      ChangeNotifierProvider(create: (context) => UserDrillInfoProvider()),
+    ], child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final AuthProvider authProvider;
-  const MyApp({super.key, required this.authProvider});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +28,16 @@ class MyApp extends StatelessWidget {
       designSize: const Size(400, 900),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (_) => AuthProvider()..loadLoginState()),
-          ChangeNotifierProvider(create: (_) => DrillProvider()),
-          ChangeNotifierProvider(create: (context) => UserDrillInfoProvider()),
-        ],
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: authProvider.isLoggedIn ? HomeScreen() : LoginScreen(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
         ),
+        home: Provider.of<AuthProvider>(context, listen: false).isLoggedIn
+            ? HomeScreen()
+            : LoginScreen(),
       ),
     );
   }

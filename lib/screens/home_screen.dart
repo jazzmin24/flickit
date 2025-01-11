@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     log(authProvider.userId ?? "");
     log("-----------------------");
     drillProvider.fetchDrills(authProvider.userId ?? "");
-
   }
 
   @override
@@ -34,11 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final drillProvider = Provider.of<DrillProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
-    // Fetch drills when the screen is loade
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -116,14 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           return GestureDetector(
                             onTap: () {
                               log('${authProvider.userId}');
-                              // Navigate to Drill Detail Page
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) =>
-                              //         DrillDetailPage(drill: drill),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DrillDetailPage(drill: drill, userId: authProvider.userId??"67823c2a0dd1e9861be18c57",),
+                                ),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(
