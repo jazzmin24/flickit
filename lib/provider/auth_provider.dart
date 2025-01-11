@@ -1,17 +1,34 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class AuthProvider extends ChangeNotifier {
-  final String _baseUrl = "http://127.0.0.1:5001/flikit-e7b4d/us-central1";
+  final String _baseUrl = "http://0.0.0.0:5001/flikit-e7b4d/us-central1";
 
   bool _isLoggedIn = false;
+  String? _userId;
 
   bool get isLoggedIn => _isLoggedIn;
+  String? get userId => _userId;
 
-  void _setLoginState(bool value) {
+  /// Load login state from SharedPreferences
+  Future<void> loadLoginState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
+    _userId = prefs.getString("userId");
+    notifyListeners();
+  }
+
+  /// Save login state in SharedPreferences
+  Future<void> _saveLoginState(bool value, String? userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("isLoggedIn", value);
+    await prefs.setString("userId", userId ?? "");
     _isLoggedIn = value;
-    notifyListeners(); // Notify listeners about the state change
+    _userId = userId;
+    notifyListeners();
   }
 
   /// Register API
@@ -20,27 +37,22 @@ class AuthProvider extends ChangeNotifier {
     try {
       final response = await http.post(
         url,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonEncode({
-          "username": username,
-          "password": password,
-        }),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"username": username, "password": password}),
       );
 
-      if (response.statusCode == 200) {
-        // Successfully registered
-        print("Registration successful: ${response.body}");
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (responseData.containsKey("message") &&
+          responseData["message"] == "Registration successful") {
+        log("Registration successful: ${response.body}");
         return true;
       } else {
-        // Handle error response
-        print("Registration failed: ${response.body}");
+        log("Registration failed: ${response.body}");
         return false;
       }
     } catch (error) {
-      // Handle exceptions
-      print("Error during registration: $error");
+      log("Error during registration: $error");
       return false;
     }
   }
@@ -51,37 +63,36 @@ class AuthProvider extends ChangeNotifier {
     try {
       final response = await http.post(
         url,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonEncode({
-          "username": username,
-          "password": password,
-        }),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"username": username, "password": password}),
       );
 
-      if (response.statusCode == 200) {
-        // Successfully logged in
-        print("Login successful: ${response.body}");
-        _setLoginState(true); // Update login state and notify listeners
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200 &&
+          responseData.containsKey("userId")) {
+        log("Login successful: ${response.body}");
+        await _saveLoginState(true, responseData["userId"]);
         return true;
       } else {
-        // Handle error response
-        print("Login failed: ${response.body}");
-        _setLoginState(false); // Update login state and notify listeners
+        log("Login failed: ${response.body}");
+        await _saveLoginState(false, null);
         return false;
       }
     } catch (error) {
-      // Handle exceptions
-      print("Error during login: $error");
-      _setLoginState(false); // Update login state and notify listeners
+      log("Error during login: $error");
+      await _saveLoginState(false, null);
       return false;
     }
   }
 
   /// Logout
-  void logout() {
-    _setLoginState(false); // Update login state and notify listeners
-    print("User logged out");
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    _isLoggedIn = false;
+    _userId = null;
+    notifyListeners();
+    log("User logged out");
   }
 }

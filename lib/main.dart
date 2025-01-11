@@ -5,12 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  AuthProvider authProvider = AuthProvider();
+  await authProvider.loadLoginState();
+  runApp(MyApp(authProvider: authProvider));
 }
 
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   final AuthProvider authProvider;
+  const MyApp({super.key , required this.authProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MultiProvider(
-         providers: [
+        providers: [
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => AuthProvider(),
           ),
@@ -31,7 +36,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: HomeScreen(),
+          home: authProvider.isLoggedIn ? HomeScreen() : LoginScreen(),
         ),
       ),
     );

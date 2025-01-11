@@ -16,24 +16,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _register() async {
-    final success = await _authProvider.registerUser(
+    await _authProvider
+        .registerUser(
       _usernameController.text,
       _passwordController.text,
-    );
-    if (success) {
+    )
+        .then((value) {
+      if (value) {
         Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Registration Successful!")),
-      );
-     
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Registration Failed!")),
-      );
-    }
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Registration Successful!")),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Registration Failed!")),
+        );
+      }
+    });
   }
 
   @override
@@ -78,11 +80,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: Colors.blueAccent),
+                            borderSide:
+                                const BorderSide(color: Colors.blueAccent),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: Colors.lightBlue),
+                            borderSide:
+                                const BorderSide(color: Colors.lightBlue),
                           ),
                         ),
                         style: const TextStyle(color: Colors.white),
@@ -105,11 +109,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: Colors.blueAccent),
+                            borderSide:
+                                const BorderSide(color: Colors.blueAccent),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(color: Colors.lightBlue),
+                            borderSide:
+                                const BorderSide(color: Colors.lightBlue),
                           ),
                         ),
                         style: const TextStyle(color: Colors.white),
